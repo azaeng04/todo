@@ -1,0 +1,79 @@
+{
+  "sourceRoot": "apps/app-todo/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/app-todo",
+        "index": "apps/app-todo/src/index.html",
+        "baseHref": "/",
+        "main": "apps/app-todo/src/main.js",
+        "polyfills": "apps/app-todo/src/polyfills.js",
+        "tsConfig": "apps/app-todo/tsconfig.app.json",
+        "assets": ["apps/app-todo/src/favicon.ico", "apps/app-todo/src/assets"],
+        "styles": ["apps/app-todo/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/app-todo/src/environments/environment.js",
+              "with": "apps/app-todo/src/environments/environment.prod.js"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "app-todo:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "app-todo:build:development"
+        },
+        "production": {
+          "buildTarget": "app-todo:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/app-todo/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/app-todo"],
+      "options": {
+        "jestConfig": "apps/app-todo/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
