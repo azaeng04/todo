@@ -2,12 +2,6 @@
 version: '3.8'
 
 services:
-  # todo:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - node_modules:/todo/node_modules
   api:
     image: todo
     healthcheck:
@@ -15,23 +9,30 @@ services:
       interval: 3s
       timeout: 10s
       retries: 3
-    depends_on:
-      - serviceName
+    command: yarn start api-todo
+    env_file: .env
     volumes:
+      - .:/todo/
+      - node_modules:/todo/node_modules
+    ports:
+      - 8080:8080
+
+  app:
+    image: todo
+    healthcheck:
+      test: ["CMD",  "node", "./apps/app-todo/health-check.js"]
+      interval: 3s
+      timeout: 10s
+      retries: 3
+    command: yarn start app-todo
+    depends_on:
+      api:
+        condition: service_healthy
+    env_file: .env
+    volumes:
+      - .:/todo/
       - node_modules:/todo/node_modules
     ports:
       - 4200:4200
-
-  test:
-    image: todo
-    command: yarn test api-todo
-    volumes:
-      - node_modules:/todo/node_modules
-    environment:
-      APP_ENV: 'docker'
-    depends_on:
-      api: 
-        condition: service_healthy
-
 volumes:
   node_modules:

@@ -1,7 +1,7 @@
 const http = require('http');
 const options = {
-  host: 'localhost',
-  port: '4200',
+  host: process.env.API_TODO_HOST ||'localhost',
+  port: process.env.API_TODO_PORT || '8080',
   timeout: 300000,
 };
 const request = http.request(options, (res) => {

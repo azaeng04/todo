@@ -1,13 +1,12 @@
-import { environment } from './environments/environment';
-
-const env = process.env.ENV ? environment.local : environment.docker;
+import { AxiosRequestConfig } from 'axios';
+import { env } from '../environments/environment';
 
 export const getTodos = () => ({
   method: 'GET',
   url: `${env}/todos`,
 });
 
-export const postTodos = (data: any) => ({
+export const postTodos = (data: any): AxiosRequestConfig => ({
   method: 'POST',
   url: `${env}/todos`,
   data: data,
