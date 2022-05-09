@@ -1,0 +1,17 @@
+name: Validate
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build docker image
+        run: docker build -t todo .
+      
+      - name: Execute unit tests
+        run: docker compose run --rm api-unit
