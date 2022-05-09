@@ -1,0 +1,14 @@
+name: Validate
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build docker image
+        run: docker build -t todo .
+      
+      - name: Execute unit tests
+        run: docker compose run --rm api-unit
