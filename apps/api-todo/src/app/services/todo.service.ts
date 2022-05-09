@@ -1,4 +1,4 @@
-import { TodoModel, TodoStatusModel } from './todo.model';
+import { TodoModel, TodoStatusModel } from '../models/todo.model';
 
 let todoService: TodoService = null;
 

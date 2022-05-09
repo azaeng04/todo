@@ -1,5 +1,5 @@
-import app from '../../helpers/registerRoutes';
-import todoService from '../../app/todo/todo.service';
+import app from '../helpers/todo.app';
+import todoService from '../services/todo.service';
 import http = require('http');
 
 app.get('/todos', function (req, res) {

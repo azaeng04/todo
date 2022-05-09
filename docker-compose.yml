@@ -16,6 +16,14 @@ services:
       - node_modules:/todo/node_modules
     ports:
       - 8080:8080
+  
+  api-unit:
+    image: todo
+    command: yarn test api-todo
+    env_file: .env
+    volumes:
+      - .:/todo/
+      - node_modules:/todo/node_modules
 
   app:
     image: todo

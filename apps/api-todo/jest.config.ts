@@ -18,9 +18,5 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/apps/api-todo',
-  moduleNameMapper: {
-    '~api/(.*)$': '<rootDir>/apps/api-todo/$1',
-    '~app/(.*)$': '<rootDir>/apps/app-todo/$1',
-  },
   testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
 } as Config.InitialOptions;

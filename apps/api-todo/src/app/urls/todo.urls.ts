@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from 'axios';
-import { env } from '../environments/environment';
+import { env } from '../../environments/environment';
 
 export const getTodos = () => ({
   method: 'GET',

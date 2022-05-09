@@ -1,4 +1,4 @@
-import { TodoStatusModel } from './todo.model';
+import { TodoStatusModel } from '../models/todo.model';
 import serviceUnderTest from './todo.service';
 
 describe('Todo Service', () => {
@@ -8,7 +8,7 @@ describe('Todo Service', () => {
 
   describe('POSITIVE', () => {
     describe(`Add Todo`, () => {
-      given('a data of a todo item', () => {
+      given('data of a todo item', () => {
         const expctedResult = [
           {
             id: expect.any(Number),
