@@ -17,6 +17,6 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/api-todo/unit',
-  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
+  coverageDirectory: '../../coverage/apps/api-todo/int',
+  testMatch: ['**/?(*.)+(int-spec|int-test).[jt]s?(x)'],
 } as Config.InitialOptions;

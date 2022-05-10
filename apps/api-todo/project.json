@@ -45,6 +45,14 @@
         "jestConfig": "apps/api-todo/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "test-int": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/api-todo/integration"],
+      "options": {
+        "jestConfig": "apps/api-todo/jest.config.int.ts",
+        "passWithNoTests": true
+      }
     }
   },
   "tags": []

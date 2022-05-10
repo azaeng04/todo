@@ -18,6 +18,7 @@ class TodoService {
 
   resetTodos = () => {
     this.todos = [];
+    return this.todos;
   };
 
   fetchTodos = () => {

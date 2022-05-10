@@ -166,6 +166,35 @@ describe('Todo Service', () => {
         });
       });
     });
+
+    describe('Reset Todos', () => {
+      given('a list of todos', () => {
+        const todo1 = {
+          id: 1,
+          todo: 'My Todo',
+          status: TodoStatusModel.IN_PROGRESS,
+        };
+
+        const todo2 = {
+          id: 2,
+          todo: 'My Todo',
+          status: TodoStatusModel.IN_PROGRESS,
+        };
+
+        serviceUnderTest.addTodo(todo1);
+        serviceUnderTest.addTodo(todo2);
+
+        const expectedResult = [];
+
+        when('resetting the todos', () => {
+          const actualResult = serviceUnderTest.resetTodos();
+
+          then('the todo list should be empty', () => {
+            expect(actualResult).toEqual(expectedResult);
+          });
+        });
+      });
+    });
   });
 
   describe('NEGATIVE', () => {
@@ -390,7 +419,7 @@ describe('Todo Service', () => {
     describe('Delete Todo', () => {
       given('an empty todo list', () => {
         const expectedResult = {
-          message: 'There are no todo items to delete',
+          message: 'There are no todo items with ID 1',
         };
         const fakeTodo = {
           id: 1,

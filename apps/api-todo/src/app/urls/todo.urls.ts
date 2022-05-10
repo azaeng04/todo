@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from 'axios';
 import { env } from '../../environments/environment';
 
 export const getTodos = () => ({
@@ -6,10 +5,10 @@ export const getTodos = () => ({
   url: `${env}/todos`,
 });
 
-export const postTodos = (data: any): AxiosRequestConfig => ({
+export const postTodos = (data: any) => ({
   method: 'POST',
   url: `${env}/todos`,
-  data: data,
+  data,
 });
 
 export const updateTodos = (data: any) => ({
@@ -18,8 +17,13 @@ export const updateTodos = (data: any) => ({
   data,
 });
 
-export const deleteTodos = (id: any) => ({
+export const deleteTodos = (data: any) => ({
   method: 'POST',
   url: `${env}/del-todos`,
-  data: { id },
+  data,
+});
+
+export const resetTodos = () => ({
+  method: 'POST',
+  url: `${env}/reset`,
 });
