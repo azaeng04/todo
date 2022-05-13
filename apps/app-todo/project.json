@@ -47,7 +47,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "app-todo:build",
-        "hmr": true
+        "hmr": true,
+        "port": 3000
       },
       "configurations": {
         "development": {
@@ -71,7 +72,16 @@
       "outputs": ["coverage/apps/app-todo"],
       "options": {
         "jestConfig": "apps/app-todo/jest.config.js",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "detectOpenHandles": true
+      }
+    },
+    "ct": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/app-todo/cypress.json",
+        "tsConfig": "tsconfig.spec.json",
+        "testingType": "component"
       }
     }
   },

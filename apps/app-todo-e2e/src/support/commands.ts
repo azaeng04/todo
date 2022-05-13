@@ -9,9 +9,9 @@
 // ***********************************************
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
-});
+// Cypress.Commands.add('login', (email, password) => {
+//   console.log('Custom command example: Login', email, password);
+// });
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
@@ -23,3 +23,7 @@ Cypress.Commands.add('login', (email, password) => {
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('dataCy', (selector: string) => {
+  return cy.get(`[data-cy='${selector}']`);
+});

@@ -1,19 +1,19 @@
 import React, {useEffect} from "react";
-import "./app.module.css";
+import "./app.css";
 import { Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { appUrl } from "../environments/environment";
 
 function Todo({ todo, index, markTodo, removeTodo }) {
   return (
     <div
       className="todo"
-
+      data-cy={`todo-${index}`}
     >
       <span style={{ textDecoration: todo.status==='done' ? "line-through" : "" }}>{todo.todo}</span>
       <div>
-        <Button variant="outline-success" onClick={() => markTodo(index)}>✓</Button>{' '}
-        <Button variant="outline-danger" onClick={() => removeTodo(index)}>✕</Button>
+        <Button data-cy="checkTodoBtn" variant="outline-success" onClick={() => markTodo(index)}>✓</Button>{' '}
+        <Button data-cy="deleteTodoBtn" variant="outline-danger" onClick={() => removeTodo(index)}>✕</Button>
       </div>
     </div>
   );
@@ -33,9 +33,9 @@ function FormTodo({ addTodo }) {
     <Form onSubmit={handleSubmit}>
     <Form.Group>
       <Form.Label><b>Add Todo</b></Form.Label>
-      <Form.Control type="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder="Add new todo" />
+      <Form.Control data-cy="addNewTodoTxtField" type="text" className="input" value={value} onChange={e => setValue(e.target.value)} placeholder="Add new todo" />
     </Form.Group>
-    <Button variant="primary mb-3" type="submit">
+    <Button data-cy="submitBtn" variant="primary mb-3" type="submit">
       Submit
     </Button>
   </Form>
@@ -43,11 +43,7 @@ function FormTodo({ addTodo }) {
 }
 
 function App() {
-  let currentId = 0
-
-
-  const [todos, setTodos] = React.useState(null);
-
+  const [todos, setTodos] = React.useState([]);
 
   useEffect(() => {
     // POST request using fetch inside useEffect React hook
@@ -55,16 +51,12 @@ function App() {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     };
-    fetch('http://localhost:4200/todos', requestOptions)
+    fetch(`${appUrl}/todos`, requestOptions)
         .then(response => response.json())
         .then(data => setTodos(data));
 
     // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
-
-
-console.log(todos);
-
 
 
   const addTodo = text => {
@@ -79,7 +71,7 @@ console.log(todos);
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(todoObj)
     };
-    fetch('http://localhost:8080/todos', requestOptions)
+    fetch(`${appUrl}/todos`, requestOptions)
         .then(response => response.json())
         .then(data => setTodos(data));
   };
@@ -96,7 +88,7 @@ console.log(todos);
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(todoObj)
     };
-    fetch('http://localhost:8080/edit-todos', requestOptions)
+    fetch(`${appUrl}/edit-todos`, requestOptions)
         .then(response => response.json())
         .then(data => setTodos(data));
   };
@@ -111,7 +103,7 @@ console.log(todos);
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(todoObjToDel)
     };
-    fetch('http://localhost:8080/del-todos', requestOptions)
+    fetch(`${appUrl}/del-todos`, requestOptions)
         .then(response => response.json())
         .then(data => setTodos(data));
 
@@ -122,7 +114,7 @@ console.log(todos);
       <div className="container">
         <h1 className="text-center mb-4">Stitch Todo List</h1>
         <FormTodo addTodo={addTodo} />
-        <div>
+        <div data-cy='todos'>
           {todos?.map((todo) => (
             <Card>
               <Card.Body>

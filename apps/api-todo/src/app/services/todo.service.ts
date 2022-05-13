@@ -1,20 +1,9 @@
-import { TodoModel, TodoStatusModel } from '../models/todo.model';
+import { TodoModel } from '../models/todo.model';
 
 let todoService: TodoService = null;
 
 class TodoService {
-  todos: TodoModel[] = [
-    {
-      id: 1,
-      todo: 'Write app for QA assessment',
-      status: TodoStatusModel.IN_PROGRESS,
-    },
-    {
-      id: 2,
-      todo: 'Write up for QA assessment',
-      status: TodoStatusModel.DONE,
-    },
-  ];
+  todos: TodoModel[] = [];
 
   resetTodos = () => {
     this.todos = [];
