@@ -1,26 +1,6 @@
-const port = process.env.API_TODO_PORT ? +process.env.API_TODO_PORT : 8080;
+const httpSchema = process.env.HTTP_SCHEMA ?? 'http';
+export const apiHost = process.env.API_TODO_HOST ?? 'localhost';
+export const apiPort = process.env.API_TODO_PORT ?? 3001;
 
-type Host = {
-  local: string;
-  docker: string;
-};
+export const apiUrl = `${httpSchema}://${apiHost}:${apiPort}`;
 
-const host: Host = {
-  local: `http://localhost:${port}`,
-  docker: `http://api:${port}`,
-};
-
-export let env: string;
-
-if (!process.env.APP_ENV) {
-  env = host['local'];
-} else if (process.env.APP_ENV === 'docker') {
-  env = host['docker'];
-} else {
-  throw new Error(
-    `Environment ${
-      process.env.APP_ENV
-    } does not exist. It should be one of the following ${Object.keys(host)}`
-  );
-}
-export default env;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 // ***********************************************************
 // This example support/index.js is processed and
 // loaded automatically before your test files.
@@ -14,3 +15,15 @@
 // ***********************************************************
 // Import commands.js using ES2015 syntax:
 import './commands';
+
+declare global {
+  namespace Cypress {
+    export interface Chainable {
+      /**
+       * Get an element based on the data-cy attribute
+       * @param selector the selector used as part of data-cy
+       */
+      dataCy(selector: string): Chainable<Element>;
+    }
+  }
+}

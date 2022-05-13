@@ -4,32 +4,41 @@ version: '3.8'
 services:
   api:
     image: todo
+    container_name: api-todo
     healthcheck:
-      test: ["CMD",  "node", "./apps/api-todo/health-check.js"]
+      test: ["CMD",  "curl", "http://localhost:3001"]
       interval: 3s
       timeout: 10s
       retries: 3
-      start_period: 1m
+      start_period: 30s
+    networks: 
+      - todo-net
     command: yarn start api-todo
     env_file: .env
     volumes:
       - .:/todo/
       - node_modules:/todo/node_modules
     ports:
-      - 8080:8080
+      - "3001:3001"
   
   api-unit:
     image: todo
+    container_name: api-unit
     command: yarn test api-todo
     env_file: .env
+    networks: 
+      - todo-net
     volumes:
       - .:/todo/
       - node_modules:/todo/node_modules
 
   api-int:
     image: todo
+    container_name: api-int
     command: yarn nx run api-todo:test-int
     env_file: .env
+    networks: 
+      - todo-net
     depends_on:
       api:
         condition: service_healthy
@@ -39,13 +48,16 @@ services:
 
   app:
     image: todo
+    container_name: app-todo
     healthcheck:
-      test: ["CMD",  "node", "./apps/app-todo/health-check.js"]
+      test: ["CMD",  "curl", "http://localhost:3000"]
       interval: 3s
       timeout: 10s
       retries: 3
       start_period: 1m
-    command: yarn start app-todo
+    networks: 
+      - todo-net
+    command: yarn start app-todo --host 0.0.0.0
     depends_on:
       api:
         condition: service_healthy
@@ -54,6 +66,28 @@ services:
       - .:/todo/
       - node_modules:/todo/node_modules
     ports:
-      - 4200:4200
+      - "3000:3000"
+
+  app-e2e:
+    image: cypress/included:9.6.1
+    container_name: app-e2e
+    command: yarn nx run app-todo-e2e:e2e
+    working_dir: /todo/
+    networks: 
+      - todo-net
+    entrypoint: []
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - ./:/todo/
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ~/.Xauthority:/root/.Xauthority
+      - node_modules:/todo/node_modules
+    environment:
+      DISPLAY: $DISPLAY
+
+networks:
+  todo-net:
 volumes:
   node_modules:

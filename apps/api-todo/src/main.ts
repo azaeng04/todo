@@ -1,11 +1,11 @@
 import httpServer from './app/routes/todo.routes';
+import { apiPort, apiUrl } from './environments/environment';
 
-const port = process.env.API_TODO_PORT || 3333;
-const httpSchema = process.env.HTTP_SCHEMA || 'http';
-const apiTodoHost = process.env.API_TODO_HOST || 'localhost';
+console.log(apiUrl);
+console.log(apiPort);
 
-httpServer.listen(port, () => {
-  console.log(`Listening at ${httpSchema}://${apiTodoHost}:${port}`);
+httpServer.listen(apiPort, () => {
+  console.log(`Listening at ${apiUrl}`);
 });
 
 httpServer.on('error', console.error);
