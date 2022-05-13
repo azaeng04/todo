@@ -9,6 +9,7 @@ services:
       interval: 3s
       timeout: 10s
       retries: 3
+      start_period: 1m
     command: yarn start api-todo
     env_file: .env
     volumes:
@@ -25,6 +26,17 @@ services:
       - .:/todo/
       - node_modules:/todo/node_modules
 
+  api-int:
+    image: todo
+    command: yarn nx run api-todo:test-int
+    env_file: .env
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - .:/todo/
+      - node_modules:/todo/node_modules
+
   app:
     image: todo
     healthcheck:
@@ -32,6 +44,7 @@ services:
       interval: 3s
       timeout: 10s
       retries: 3
+      start_period: 1m
     command: yarn start app-todo
     depends_on:
       api:

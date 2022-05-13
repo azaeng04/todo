@@ -2,6 +2,14 @@ import app from '../helpers/todo.app';
 import todoService from '../services/todo.service';
 import http = require('http');
 
+app.post('/reset', function (req, res) {
+  res.header('Content-type', 'text/json');
+
+  const todos = todoService.resetTodos();
+
+  return res.end(JSON.stringify(todos));
+});
+
 app.get('/todos', function (req, res) {
   res.header('Content-type', 'text/json');
 
