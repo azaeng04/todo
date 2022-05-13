@@ -30,6 +30,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: e2e tests
-        run: docker compose run --rm app-e2e yarn nx run app-todo-e2e:e2e --parallel --record --key $CYPRESS_RECORD_KEY
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.$CYPRESS_RECORD_KEY }}
+        run: docker compose run --rm app-e2e yarn nx run app-todo-e2e:e2e --parallel --record --key ${{ secrets.$CYPRESS_RECORD_KEY }}
