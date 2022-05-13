@@ -37,3 +37,8 @@ To execute the Cypress E2E tests run:
 
 #### Execute the E2E tests:
 `docker compose run --rm app-e2e`
+
+# Test Results
+The Cypress test results will be available [here](https://tinyurl.com/y6mh9j9w) on the Cypress Dashboard
+
+The Unit and Integration test results will be available [here](https://github.com/azaeng04/todo/actions)
