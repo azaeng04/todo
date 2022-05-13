@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   api:
-    image: todo
+    image: azaeng04/todo
     container_name: api-todo
     healthcheck:
       test: ["CMD",  "curl", "http://localhost:3001"]
@@ -22,7 +22,7 @@ services:
       - "3001:3001"
   
   api-unit:
-    image: todo
+    image: azaeng04/todo
     container_name: api-unit
     command: yarn test api-todo
     env_file: .env
@@ -33,7 +33,7 @@ services:
       - node_modules:/todo/node_modules
 
   api-int:
-    image: todo
+    image: azaeng04/todo
     container_name: api-int
     command: yarn nx run api-todo:test-int
     env_file: .env
@@ -47,7 +47,7 @@ services:
       - node_modules:/todo/node_modules
 
   app:
-    image: todo
+    image: azaeng04/todo
     container_name: app-todo
     healthcheck:
       test: ["CMD",  "curl", "http://localhost:3000"]
