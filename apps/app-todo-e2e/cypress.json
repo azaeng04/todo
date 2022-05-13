@@ -1,12 +1,18 @@
 {
   "fileServerFolder": ".",
+  "downloadsFolder": "./src/downloads",
   "fixturesFolder": "./src/fixtures",
-  "integrationFolder": "./src/integration",
+  "integrationFolder": "./src/e2e",
   "modifyObstructiveCode": false,
-  "supportFile": "./src/support/index.js",
+  "supportFile": "./src/support/index.ts",
   "pluginsFile": false,
   "video": true,
   "videosFolder": "../../dist/cypress/apps/app-todo-e2e/videos",
   "screenshotsFolder": "../../dist/cypress/apps/app-todo-e2e/screenshots",
-  "chromeWebSecurity": false
+  "chromeWebSecurity": false,
+  "env": {
+    "HTTP_SCHEMA": "http",
+    "API_TODO_HOST": "localhost",
+    "API_TODO_PORT": 3001
+  }
 }

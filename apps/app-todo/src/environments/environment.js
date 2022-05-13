@@ -1,5 +1,5 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// When building for production, this file is replaced with `environment.prod.ts`.
-export const environment = {
-  production: false,
-};
+export const httpSchema = process.env.HTTP_SCHEMA ?? 'http';
+export const appHost = process.env.APP_TODO_HOST ?? 'localhost';
+export const appPort = process.env.APP_TODO_PORT ?? 3001;
+
+export const appUrl = `${httpSchema}://${appHost}:${appPort}`;

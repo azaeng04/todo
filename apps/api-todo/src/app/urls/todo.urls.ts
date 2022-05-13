@@ -1,29 +1,29 @@
-import { env } from '../../environments/environment';
+import { apiUrl } from '../../environments/environment';
 
 export const getTodos = () => ({
   method: 'GET',
-  url: `${env}/todos`,
+  url: `${apiUrl}/todos`,
 });
 
 export const postTodos = (data: any) => ({
   method: 'POST',
-  url: `${env}/todos`,
+  url: `${apiUrl}/todos`,
   data,
 });
 
 export const updateTodos = (data: any) => ({
   method: 'POST',
-  url: `${env}/edit-todos`,
+  url: `${apiUrl}/edit-todos`,
   data,
 });
 
 export const deleteTodos = (data: any) => ({
   method: 'POST',
-  url: `${env}/del-todos`,
+  url: `${apiUrl}/del-todos`,
   data,
 });
 
 export const resetTodos = () => ({
   method: 'POST',
-  url: `${env}/reset`,
+  url: `${apiUrl}/reset`,
 });
