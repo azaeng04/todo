@@ -73,8 +73,6 @@ services:
     container_name: app-e2e
     command: yarn nx run app-todo-e2e:e2e
     working_dir: /todo/
-    networks: 
-      - todo-net
     entrypoint: []
     depends_on:
       app:
@@ -86,6 +84,7 @@ services:
       - node_modules:/todo/node_modules
     environment:
       DISPLAY: $DISPLAY
+    network_mode: host
 
 networks:
   todo-net:
