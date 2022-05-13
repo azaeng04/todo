@@ -9,9 +9,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Build docker image
-        run: docker build -t todo .
-      
-      - name: Execute unit tests
+      - name: unit tests
         run: docker compose run --rm api-unit
+  
+  api-tests:
+    name: api tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: api tests
+        run: docker compose run --rm api-int
+
+  e2e-tests:
+    name: e2e
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: e2e tests
+        run: docker compose run --rm app-e2e yarn nx run app-todo-e2e:e2e --parallel --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
