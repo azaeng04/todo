@@ -172,6 +172,29 @@ describe('Todo API', () => {
 
         expect(actualResult).toEqual(expectedResult);
       });
+
+      test(`GIVEN a todo with more than 100 characters
+         WHEN adding the todo
+         THEN an error message should be returned`, async () => {
+        const expectedResult = {
+          status: 400,
+          data: {
+            message: `Todo length exceeds the limit of 100 characters`,
+          },
+        };
+        const invalidStatusTodo = {
+          id: 1,
+          todo: 'a'.repeat(101),
+          status: 400,
+        };
+
+        const { status, data } = await httpRequest(
+          postTodos(invalidStatusTodo)
+        );
+        const actualResult = { status, data };
+
+        expect(actualResult).toEqual(expectedResult);
+      });
     });
 
     describe('POST /edit-todo', () => {

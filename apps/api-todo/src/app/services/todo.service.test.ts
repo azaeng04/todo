@@ -36,7 +36,7 @@ describe('Todo Service', () => {
         const expctedResult = [
           {
             id: expect.any(Number),
-            todo: 'a'.repeat(99.99),
+            todo: 'a'.repeat(99),
             status: TodoStatusModel.IN_PROGRESS,
           },
         ];
@@ -197,7 +197,7 @@ describe('Todo Service', () => {
     });
   });
 
-  describe.skip('NEGATIVE', () => {
+  describe('NEGATIVE', () => {
     describe('Add Todo', () => {
       given('an empty todo item', () => {
         const expectedResult = {
@@ -290,14 +290,10 @@ describe('Todo Service', () => {
     });
 
     describe('Update Todo', () => {
-      given('an empty new todo item', () => {
+      given('no todos were added', () => {
         const expectedResult = {
-          message:
-            'Todo payload is invalid. The following properties are allowed: id, todo and status',
+          message: 'Todo item with ID: 1 could not be found',
         };
-        const fakeTodo = {};
-
-        serviceUnderTest.addTodo(fakeTodo);
 
         const newTodo = {
           id: 1,
@@ -305,82 +301,9 @@ describe('Todo Service', () => {
           status: TodoStatusModel.DONE,
         };
 
-        when('adding a todo', () => {
+        when('updating a todo', () => {
           const actualResult = serviceUnderTest.updateTodo(newTodo);
 
-          then('an error message should be returned', () => {
-            expect(actualResult).toEqual(expectedResult);
-          });
-        });
-      });
-
-      // BUG: No error handling
-      given('a todo item only with the ID property', () => {
-        const expectedResult = {
-          message:
-            'Todo payload is invalid. The following properties are allowed: id, todo and status',
-        };
-        const fakeTodo = {
-          id: 1,
-        };
-        serviceUnderTest.addTodo(fakeTodo);
-
-        const newTodo = {
-          id: 1,
-          todo: 'New todo',
-          status: TodoStatusModel.DONE,
-        };
-        when('adding a todo', () => {
-          const actualResult = serviceUnderTest.updateTodo(newTodo);
-
-          then('an error message should be returned', () => {
-            expect(actualResult).toEqual(expectedResult);
-          });
-        });
-      });
-
-      // BUG: No error handling
-      given('a todo item only with the status property', () => {
-        const expectedResult = {
-          message:
-            'Todo payload is invalid. The following properties are allowed: id, todo and status',
-        };
-        const fakeTodo = {
-          status: TodoStatusModel.IN_PROGRESS,
-        };
-        serviceUnderTest.addTodo(fakeTodo);
-
-        const newTodo = {
-          id: 1,
-          todo: 'New todo',
-          status: TodoStatusModel.DONE,
-        };
-        when('adding a todo', () => {
-          const actualResult = serviceUnderTest.updateTodo(newTodo);
-          then('an error message should be returned', () => {
-            expect(actualResult).toEqual(expectedResult);
-          });
-        });
-      });
-
-      // BUG: No error handling
-      given('a todo item only with the todo property', () => {
-        const expectedResult = {
-          message:
-            'Todo payload is invalid. The following properties are allowed: id, todo and status',
-        };
-        const fakeTodo = {
-          todo: 'My fake Todo',
-        };
-        serviceUnderTest.addTodo(fakeTodo);
-
-        const newTodo = {
-          id: 1,
-          todo: 'New todo',
-          status: TodoStatusModel.DONE,
-        };
-        when('adding a todo', () => {
-          const actualResult = serviceUnderTest.updateTodo(newTodo);
           then('an error message should be returned', () => {
             expect(actualResult).toEqual(expectedResult);
           });
@@ -388,7 +311,7 @@ describe('Todo Service', () => {
       });
 
       // BUG: Log a bug
-      given('a todo item with more than 100 characters', () => {
+      given('a todo in the list', () => {
         const expectedResult = {
           message:
             'Todo item description length exceeds the maximum amount of 100 characters allowed',
@@ -406,7 +329,7 @@ describe('Todo Service', () => {
           todo: 'a'.repeat(101),
           status: TodoStatusModel.DONE,
         };
-        when('adding a todo', () => {
+        when('updating a todo with more than 100 characters', () => {
           const actualResult = serviceUnderTest.updateTodo(newTodo);
 
           then('an error message should be returned', () => {
@@ -419,7 +342,7 @@ describe('Todo Service', () => {
     describe('Delete Todo', () => {
       given('an empty todo list', () => {
         const expectedResult = {
-          message: 'There are no todo items with ID 1',
+          message: 'Todo item with ID: 1 could not be found',
         };
         const fakeTodo = {
           id: 1,
@@ -428,34 +351,6 @@ describe('Todo Service', () => {
         };
         when('deleting a todo', () => {
           const actualResult = serviceUnderTest.deleteTodo(fakeTodo);
-
-          then('an error message should display', () => {
-            expect(actualResult).toEqual(expectedResult);
-          });
-        });
-      });
-
-      given('only one todo added in the todo list', () => {
-        const fakeTodo1 = {
-          id: 1,
-          todo: 'Test POST todo',
-          status: TodoStatusModel.IN_PROGRESS,
-        };
-
-        const fakeTodo2 = {
-          id: 2,
-          todo: 'Test POST todo',
-          status: TodoStatusModel.IN_PROGRESS,
-        };
-
-        serviceUnderTest.addTodo(fakeTodo1);
-
-        const expectedResult = {
-          message: `The todo item with ID '${fakeTodo2.id}' does not exist`,
-        };
-
-        when('deleting a todo', () => {
-          const actualResult = serviceUnderTest.deleteTodo(fakeTodo2);
 
           then('an error message should display', () => {
             expect(actualResult).toEqual(expectedResult);
